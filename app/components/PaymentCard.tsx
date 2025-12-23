@@ -464,15 +464,15 @@ export default function PaymentCard({ onBack }: PaymentCardProps = {}) {
                   onClick={(e) => e.stopPropagation()}
                   style={{ pointerEvents: 'auto' }}
                 >
-                  <h3 className="text-2xl font-black text-white mb-6 tracking-tight drop-shadow-lg text-center">
+                  <h3 className="text-2xl font-black text-white mb-4 tracking-tight drop-shadow-lg text-center">
                     Pay via UPI ID
                   </h3>
                   
-                  <div className="mb-6 relative z-30">
-                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-5 border border-white/20">
-                      <p className="text-white/70 text-xs mb-3 text-center">UPI ID</p>
-                      <div className="flex items-center justify-between gap-3 mb-4">
-                        <p className="text-white font-bold text-lg flex-1 text-center break-all">
+                  <div className="mb-6 relative z-30 space-y-4">
+                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-5 border border-white/18 shadow-xl">
+                      <p className="text-white/70 text-[11px] mb-2 text-center tracking-wide uppercase">UPI ID</p>
+                      <div className="flex items-center justify-between gap-3 mb-4 flex-wrap">
+                        <p className="text-white font-bold text-lg flex-1 text-center break-all px-2">
                           {paymentConfig.upi.id}
                         </p>
                         <motion.button
@@ -495,17 +495,25 @@ export default function PaymentCard({ onBack }: PaymentCardProps = {}) {
                           ) : (
                             <>
                               <Copy className="w-4 h-4" />
-                              <span className="text-sm">Copy UPI ID</span>
+                              <span className="text-sm">Copy</span>
                             </>
                           )}
                         </motion.button>
                       </div>
-                    </div>
-                    
-                    <div className="mt-4 text-center">
-                      <p className="text-white/80 text-xs leading-relaxed">
-                        Copy the UPI ID above, open your UPI app (GPay, PhonePe, Paytm), paste it in "Pay to UPI ID", enter amount and pay.
-                      </p>
+                      <div className="grid grid-cols-1 gap-2 text-white/75 text-xs">
+                        <div className="flex items-center gap-2">
+                          <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                          <span>Open any UPI app (GPay, PhonePe, Paytm, BHIM).</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                          <span>Choose “Pay to UPI ID” and paste the ID.</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                          <span>Enter amount and complete the payment.</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
