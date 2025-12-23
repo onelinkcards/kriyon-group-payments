@@ -11,7 +11,7 @@ interface Card3DProps {
   onFaceChange?: (face: Face) => void
   faceFront: ReactNode
   faceInfo: ReactNode
-  facePayment: ReactNode
+  facePayment?: ReactNode
 }
 
 export default function Card3D({
@@ -20,7 +20,7 @@ export default function Card3D({
   onFaceChange,
   faceFront,
   faceInfo,
-  facePayment,
+  facePayment = null,
 }: Card3DProps) {
   // Calculate rotateY based on current face
   // For double flip: front (0) -> info (180) -> payment (360/0)
@@ -95,23 +95,25 @@ export default function Card3D({
           {faceInfo}
         </div>
 
-        {/* PAYMENT FACE - rotateY 360deg (positioned to show when container rotates to 360) */}
-        <div
-          className="absolute inset-0 w-full"
-          style={{
-            backfaceVisibility: 'hidden',
-            transform: 'rotateY(360deg)',
-            willChange: 'transform',
-            opacity: currentFace === 'payment' ? 1 : 0,
-            pointerEvents: currentFace === 'payment' && !isFlipping ? 'auto' : 'none',
-            userSelect: 'none',
-            WebkitUserSelect: 'none',
-            visibility: currentFace === 'payment' ? 'visible' : 'hidden',
-            zIndex: currentFace === 'payment' ? 10 : -1
-          }}
-        >
-          {facePayment}
-        </div>
+        {/* PAYMENT FACE - rotateY 360deg (optional) */}
+        {facePayment && (
+          <div
+            className="absolute inset-0 w-full"
+            style={{
+              backfaceVisibility: 'hidden',
+              transform: 'rotateY(360deg)',
+              willChange: 'transform',
+              opacity: currentFace === 'payment' ? 1 : 0,
+              pointerEvents: currentFace === 'payment' && !isFlipping ? 'auto' : 'none',
+              userSelect: 'none',
+              WebkitUserSelect: 'none',
+              visibility: currentFace === 'payment' ? 'visible' : 'hidden',
+              zIndex: currentFace === 'payment' ? 10 : -1
+            }}
+          >
+            {facePayment}
+          </div>
+        )}
       </motion.div>
     </div>
   )
