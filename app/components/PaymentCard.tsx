@@ -46,6 +46,7 @@ export default function PaymentCard({ onBack }: PaymentCardProps = {}) {
   const { copy: copyBankName, copied: bankNameCopied } = useCopyToClipboard()
   const { copy: copyAccountNumber, copied: accountNumberCopied } = useCopyToClipboard()
   const { copy: copyIFSC, copied: ifscCopied } = useCopyToClipboard()
+  const { copy: copyUpiId, copied: upiIdCopied } = useCopyToClipboard()
 
   const [paymentModalOpen, setPaymentModalOpen] = useState(false)
   const [bankTransferModalOpen, setBankTransferModalOpen] = useState(false)
@@ -464,102 +465,48 @@ export default function PaymentCard({ onBack }: PaymentCardProps = {}) {
                   style={{ pointerEvents: 'auto' }}
                 >
                   <h3 className="text-2xl font-black text-white mb-6 tracking-tight drop-shadow-lg text-center">
-                    Choose UPI
+                    Pay via UPI ID
                   </h3>
                   
-                  <div className="space-y-3 mb-4 relative z-30">
-                    <motion.button
-                      type="button"
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      onClick={(e) => {
-                        e.preventDefault()
-                        e.stopPropagation()
-                        handlePayWithPaytm()
-                      }}
-                      className="w-full h-14 rounded-2xl shadow-xl hover:shadow-2xl transition-all flex items-center justify-center gap-3 cursor-pointer touch-manipulation text-white font-bold"
-                      style={{ 
-                        WebkitTapHighlightColor: 'transparent',
-                        pointerEvents: 'auto',
-                        background: 'linear-gradient(135deg, rgba(0,186,242,0.22) 0%, rgba(8,47,73,0.85) 70%)',
-                        border: '1.5px solid rgba(0,186,242,0.42)',
-                        boxShadow: '0 18px 32px rgba(0,186,242,0.26), 0 8px 18px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.18)',
-                        backdropFilter: 'blur(8px)'
-                      }}
-                      aria-label="Pay with Paytm"
-                    >
-                      <Image
-                        src="/logos/icons8-paytm-48.png"
-                        alt="Paytm"
-                        width={32}
-                        height={32}
-                        className="w-8 h-8 object-contain"
-                        style={{ pointerEvents: 'none', filter: 'brightness(1.15) contrast(1.15)' }}
-                      />
-                      <span className="text-white font-bold text-base">Paytm</span>
-                    </motion.button>
-
-                    <motion.button
-                      type="button"
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      onClick={(e) => {
-                        e.preventDefault()
-                        e.stopPropagation()
-                        handlePayWithGooglePay()
-                      }}
-                      className="w-full h-14 rounded-2xl shadow-xl hover:shadow-2xl transition-all flex items-center justify-center gap-3 cursor-pointer touch-manipulation text-white font-bold"
-                      style={{ 
-                        WebkitTapHighlightColor: 'transparent',
-                        pointerEvents: 'auto',
-                        background: 'linear-gradient(135deg, rgba(66,133,244,0.24) 0%, rgba(10,12,20,0.9) 75%)',
-                        border: '1.5px solid rgba(66,133,244,0.45)',
-                        boxShadow: '0 18px 32px rgba(66,133,244,0.24), 0 8px 18px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.18)',
-                        backdropFilter: 'blur(8px)'
-                      }}
-                      aria-label="Pay with Google Pay"
-                    >
-                      <Image
-                        src="/logos/icons8-google-pay-48.png"
-                        alt="Google Pay"
-                        width={32}
-                        height={32}
-                        className="w-8 h-8 object-contain"
-                        style={{ pointerEvents: 'none', filter: 'brightness(1.15) contrast(1.15)' }}
-                      />
-                      <span className="text-white font-bold text-base">Google Pay</span>
-                    </motion.button>
-
-                    <motion.button
-                      type="button"
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      onClick={(e) => {
-                        e.preventDefault()
-                        e.stopPropagation()
-                        handlePayWithPhonePe()
-                      }}
-                      className="w-full h-14 rounded-2xl shadow-xl hover:shadow-2xl transition-all flex items-center justify-center gap-3 cursor-pointer touch-manipulation text-white font-bold"
-                      style={{ 
-                        WebkitTapHighlightColor: 'transparent',
-                        pointerEvents: 'auto',
-                        background: 'linear-gradient(135deg, rgba(95,37,159,0.26) 0%, rgba(8,10,16,0.9) 80%)',
-                        border: '1.5px solid rgba(95,37,159,0.45)',
-                        boxShadow: '0 18px 32px rgba(95,37,159,0.24), 0 8px 18px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.18)',
-                        backdropFilter: 'blur(8px)'
-                      }}
-                      aria-label="Pay with PhonePe"
-                    >
-                      <Image
-                        src="/logos/icons8-phone-pe-48.png"
-                        alt="PhonePe"
-                        width={32}
-                        height={32}
-                        className="w-8 h-8 object-contain"
-                        style={{ pointerEvents: 'none', filter: 'brightness(1.15) contrast(1.15)' }}
-                      />
-                      <span className="text-white font-bold text-base">PhonePe</span>
-                    </motion.button>
+                  <div className="mb-6 relative z-30">
+                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-5 border border-white/20">
+                      <p className="text-white/70 text-xs mb-3 text-center">UPI ID</p>
+                      <div className="flex items-center justify-between gap-3 mb-4">
+                        <p className="text-white font-bold text-lg flex-1 text-center break-all">
+                          {paymentConfig.upi.id}
+                        </p>
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={(e) => {
+                            e.preventDefault()
+                            e.stopPropagation()
+                            copyUpiId(paymentConfig.upi.id)
+                          }}
+                          className="flex-shrink-0 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white font-semibold py-2.5 px-5 rounded-xl border border-white/30 transition-all cursor-pointer flex items-center gap-2"
+                          style={{ WebkitTapHighlightColor: 'transparent' }}
+                          aria-label="Copy UPI ID"
+                        >
+                          {upiIdCopied ? (
+                            <>
+                              <Check className="w-4 h-4" />
+                              <span className="text-sm">Copied!</span>
+                            </>
+                          ) : (
+                            <>
+                              <Copy className="w-4 h-4" />
+                              <span className="text-sm">Copy UPI ID</span>
+                            </>
+                          )}
+                        </motion.button>
+                      </div>
+                    </div>
+                    
+                    <div className="mt-4 text-center">
+                      <p className="text-white/80 text-xs leading-relaxed">
+                        Copy the UPI ID above, open your UPI app (GPay, PhonePe, Paytm), paste it in "Pay to UPI ID", enter amount and pay.
+                      </p>
+                    </div>
                   </div>
 
                   <motion.button
